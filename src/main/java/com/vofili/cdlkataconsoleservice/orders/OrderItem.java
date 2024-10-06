@@ -5,7 +5,7 @@ import com.vofili.cdlkataconsoleservice.items.Item;
 
 public class OrderItem {
     Long id;
-    Integer quantity;
+    Integer count;
     Item item;
     Double price;
 }

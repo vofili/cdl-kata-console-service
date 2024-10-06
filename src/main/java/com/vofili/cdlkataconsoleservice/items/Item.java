@@ -12,6 +12,8 @@ public class Item {
     String productName;
     Double unitPrice;
     Character sku;
+    Double offerPrice;
+    Integer offerCount;
 
 
 }
