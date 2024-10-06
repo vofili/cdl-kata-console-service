@@ -1,6 +1,7 @@
 package com.vofili.cdlkataconsoleservice;
 
 import com.vofili.cdlkataconsoleservice.items.ItemService;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,11 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
     }
 
+//    @PostConstruct
+//    public void init(){
+//        itemService.initDefaultPriceRule();
+//    }
+
 
     public void run(String... args){
 
@@ -43,7 +49,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
             switch (opt.toUpperCase()) {
                 case "D":
                     System.out.println("Define a pricing rule");
-                    itemService.initDefaultPriceRule();
+
                     break;
                 case "S":
                     System.out.println("Scan an item");
