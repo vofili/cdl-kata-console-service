@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Scanner;
 
-@Slf4j
 @SpringBootApplication
 public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
@@ -42,7 +41,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                 System.out.println("Item entered " + input);
 
                 switch (input.toUpperCase()) {
-                    
+
                     case "S":
                         System.out.println("Enter an item to scan ");
                         itemService.printAllAvailableSKUs();
