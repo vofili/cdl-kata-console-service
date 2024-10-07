@@ -8,12 +8,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 public class Item {
-    String sku;
-    Double unitPrice;
-    Integer specialQty;
-    Double specialPrice;
-
-
-
-
+    private String sku;
+    private int unitPrice;
+    private ItemOffer itemOffer;
 }

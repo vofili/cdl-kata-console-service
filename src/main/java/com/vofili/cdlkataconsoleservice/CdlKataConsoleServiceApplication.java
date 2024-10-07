@@ -1,6 +1,8 @@
 package com.vofili.cdlkataconsoleservice;
 
+import com.vofili.cdlkataconsoleservice.items.Item;
 import com.vofili.cdlkataconsoleservice.items.ItemService;
+import com.vofili.cdlkataconsoleservice.orders.OrderService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
@@ -16,8 +18,7 @@ import java.util.logging.Logger;
 @SpringBootApplication
 public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
-    @Autowired
-    ItemService itemService;
+
 
     public static void main(String[] args) {
 
@@ -33,13 +34,8 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
     public void run(String... args){
 
-//            for(var item : args){
-//                log.info("args ",item);
-//            }
             Scanner scanner = new Scanner(System.in);
             String opt;
-
-        while(true) {
 
 
             System.out.println("Enter an option to choose an operation:\n (D)efine pricing rule \n (S)can an item \n (C)heckout \n (E)nd the program \n");
@@ -48,8 +44,6 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
             switch (opt.toUpperCase()) {
                 case "D":
-                    System.out.println("Define a pricing rule");
-
                     break;
                 case "S":
                     System.out.println("Scan an item");
@@ -64,7 +58,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
             }
 
 
-        }
+
 
 
     }

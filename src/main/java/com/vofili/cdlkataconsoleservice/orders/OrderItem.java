@@ -3,15 +3,17 @@ package com.vofili.cdlkataconsoleservice.orders;
 
 import com.vofili.cdlkataconsoleservice.items.Item;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Data
 public class OrderItem {
-    Long id;
-    Integer quantity;
+
     Item item;
+    Integer quantity;
     Double price;
 }
