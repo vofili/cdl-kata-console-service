@@ -1,5 +1,6 @@
 package com.vofili.cdlkataconsoleservice;
 
+import com.vofili.cdlkataconsoleservice.checkout.CheckoutService;
 import com.vofili.cdlkataconsoleservice.items.Item;
 import com.vofili.cdlkataconsoleservice.items.ItemService;
 import com.vofili.cdlkataconsoleservice.orders.OrderService;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
 
+    CheckoutService checkoutService;
 
     public static void main(String[] args) {
 
@@ -36,7 +38,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
             Scanner scanner = new Scanner(System.in);
             String opt;
-
+            int total;
 
             System.out.println("Enter an option to choose an operation:\n (D)efine pricing rule \n (S)can an item \n (C)heckout \n (E)nd the program \n");
             opt = scanner.next();
@@ -46,7 +48,12 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                 case "D":
                     break;
                 case "S":
-                    System.out.println("Scan an item");
+                    System.out.println("enter an item to scan");
+                    String item = scanner.next();
+                    checkoutService.scanItem(item);
+                    System.out.println("Item: " + item + "Scanned");
+                     total = checkoutService.getRunningTotal();
+                    System.out.println("Total item cost: " + total + "Scanned");
                     break;
                 case "C":
                     System.out.println("Checkout an item");
