@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -24,11 +26,54 @@ public class ItemService {
     }
 
 
-    public void printPricingRules(){
-        for(Map.Entry<String,Item> entry:pricingRule.entrySet()){
-            System.out.println(entry.getKey()+" : "+entry.getValue().toString());
+    public void setPricingRules()
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Set pricing rules for the transaction.");
+        boolean addMoreItems = true;
+        while (addMoreItems) {
+            System.out.print("Enter item SKU: ");
+            String sku = scanner.nextLine().trim().toUpperCase();
+
+            System.out.print("Enter unit price (in pence): ");
+            int unitPrice = scanner.nextInt();
+
+            System.out.println("Does " +sku+" have a special Offer ?");
+            String discountFlag = scanner.nextLine().trim().toUpperCase();
+            if(discountFlag.equalsIgnoreCase("Y")){
+                System.out.print("Enter Special Offer quantity: ");
+                int offerQuantity = scanner.nextInt();
+
+                System.out.print("Enter Special Offer price: ");
+                int offerPrice = scanner.nextInt();
+                // Create pricing rule and add to map
+                pricingRule.put(sku, new Item(sku, unitPrice, new ItemOffer(sku,offerPrice,offerQuantity)));
+                scanner.nextLine();  // Consume newline
+            }else{
+                // Create pricing rule and add to map
+                pricingRule.put(sku, new Item(sku, unitPrice,null));
+
+            }
+
+
+            System.out.print("Add more items to pricing? (yes/no): ");
+            String response = scanner.nextLine().trim().toLowerCase();
+            addMoreItems = response.equals("yes");
         }
     }
+
+    public void printPricingRules() {
+        pricingRule.entrySet().stream()
+                .forEach(entry -> System.out.println(entry.getKey() + " : " + entry.getValue().toString()));
+    }
+
+    public void printAllAvailableSKUs() {
+        System.out.println("Available SKUs: ");
+        System.out.println(pricingRule.keySet().stream()
+                .sorted().collect(Collectors.joining())); // Print each SKU
+    }
+
 
     public void clearPricingRules(){
         pricingRule.clear();
@@ -36,15 +81,15 @@ public class ItemService {
     //define default pricing rules by adding items, special offer prices and special offer qty
     @Bean
     public Map<String,Item> initDefaultPriceRule(){
-        Item itemA = new Item("A",50,null);
-        Item itemB = new Item("B",30,null);
+        Item itemA = new Item("A",50,new ItemOffer("A",130,3));
+        Item itemB = new Item("B",30,new ItemOffer("B",45,2));
         Item itemC = new Item("C",20,null);
         Item itemD = new Item("D",15,null);
         pricingRule.put("A",itemA);
         pricingRule.put("B",itemB);
         pricingRule.put("C",itemC);
         pricingRule.put("D",itemD);
-        printPricingRules();
+
         return pricingRule;
     }
 

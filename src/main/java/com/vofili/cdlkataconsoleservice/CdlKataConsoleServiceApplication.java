@@ -1,68 +1,79 @@
 package com.vofili.cdlkataconsoleservice;
 
 import com.vofili.cdlkataconsoleservice.checkout.CheckoutService;
-import com.vofili.cdlkataconsoleservice.items.Item;
 import com.vofili.cdlkataconsoleservice.items.ItemService;
-import com.vofili.cdlkataconsoleservice.orders.OrderService;
-import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 
 import java.util.Scanner;
-import java.util.logging.Logger;
+
 @Slf4j
 @SpringBootApplication
 public class CdlKataConsoleServiceApplication implements CommandLineRunner {
 
 
+    @Autowired
     CheckoutService checkoutService;
-
+    @Autowired
+    ItemService itemService;
     public static void main(String[] args) {
 
         SpringApplication.run(CdlKataConsoleServiceApplication.class, args);
 
     }
 
-//    @PostConstruct
-//    public void init(){
-//        itemService.initDefaultPriceRule();
-//    }
-
-
+    @Override
     public void run(String... args){
 
             Scanner scanner = new Scanner(System.in);
-            String opt;
+            String input="";
             int total;
+            while(!input.equalsIgnoreCase("exit")){
+                System.out.println("Welcome to the CDL Kata Checkout System \n Enter an option to Proceed:" +
+                        "\n (S)can an item " +
+                        "\n (V)iew current Pricing " +
+                        "\n (D)efine New Pricing " +
+                        "\n (G)et final Total " +
+                        "\n (E)xit to close\n");
+                input = scanner.next().trim();
+                System.out.println("Item entered " + input);
 
-            System.out.println("Enter an option to choose an operation:\n (D)efine pricing rule \n (S)can an item \n (C)heckout \n (E)nd the program \n");
-            opt = scanner.next();
-            System.out.println("Item entered " + opt);
+                switch (input.toUpperCase()) {
+                    
+                    case "S":
+                        System.out.println("Enter an item to scan ");
+                        itemService.printAllAvailableSKUs();
+                        String item = scanner.next();
+                        checkoutService.scanItem(item);
+                        System.out.println("Item " + input.toUpperCase() + " added.");
+                        // Display running total after each item is scanned
+                        System.out.println("Running total: " + checkoutService.getRunningTotal() + " pence");
+                        break;
+                    case "V":
+                        System.out.println("View current Pricing");
+                        itemService.printPricingRules();
+                        break;
+                    case "D":
+                        System.out.println("Define New Pricing");
+                        itemService.setPricingRules();
+                        break;
+                    case "G":
+                        System.out.println("Get final total");
+                        total = checkoutService.getRunningTotal();
+                        checkoutService.clearCheckout();
+                        System.out.println("Final total: " +total + " pence");
+                        break;
+                    default:
+                        System.out.println("End the checkout");
+                        checkoutService.clearCheckout();
+                        System.exit(0);
 
-            switch (opt.toUpperCase()) {
-                case "D":
-                    break;
-                case "S":
-                    System.out.println("enter an item to scan");
-                    String item = scanner.next();
-                    checkoutService.scanItem(item);
-                    System.out.println("Item: " + item + "Scanned");
-                     total = checkoutService.getRunningTotal();
-                    System.out.println("Total item cost: " + total + "Scanned");
-                    break;
-                case "C":
-                    System.out.println("Checkout an item");
-                    break;
-                default:
-                    System.out.println("End the checkout");
-                    System.exit(0);
-
+                }
             }
+
 
 
 
