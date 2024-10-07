@@ -26,6 +26,7 @@ public class ItemService {
     }
 
 
+    //Read in single or multiple pricing rules for new or existing SKU's
     public void setPricingRules()
     {
         Scanner scanner = new Scanner(System.in);
@@ -71,9 +72,8 @@ public class ItemService {
     public void printAllAvailableSKUs() {
         System.out.println("Available SKUs: ");
         System.out.println(pricingRule.keySet().stream()
-                .sorted().collect(Collectors.joining())); // Print each SKU
+                .sorted().collect(Collectors.joining(", "))); // Print each SKU
     }
-
 
     public void clearPricingRules(){
         pricingRule.clear();

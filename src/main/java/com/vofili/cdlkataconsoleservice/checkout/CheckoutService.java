@@ -23,20 +23,24 @@ public class CheckoutService {
 
    public void scanItem(String sku){
        orderItems.put(sku,orderItems.getOrDefault(sku,0)+1);
+        runningTotal= getRunningTotal();
+       // Display running total after each item is scanned
+       System.out.println("Running total after adding item:" + sku +" is: " +runningTotal + " pence" + " £"+  runningTotal/100.0+"\n");
    }
 
-   public Integer getRunningTotal(){
-       runningTotal = 0;
-       for(Map.Entry<String,Integer>entry : orderItems.entrySet()){
-            String sku=entry.getKey();
-            Integer qty = entry.getValue();
-            runningTotal += calculateCheckoutPrice(sku,qty);
-       }
 
+   public Integer getRunningTotal(){
+
+       runningTotal = orderItems.entrySet().stream()
+               .mapToInt(entry -> calculateCheckoutPrice(entry.getKey(), entry.getValue()))
+               .sum();
        return runningTotal;
    }
 
 
+
+
+    //calculate the checkout price based on the quantity of each sku and any available offers
    public Integer calculateCheckoutPrice(String sku,int quantity){
        pricingRule = itemService.getPricingRule();
        ItemOffer itemOffer = pricingRule.get(sku).getItemOffer();
@@ -49,6 +53,7 @@ public class CheckoutService {
            }
    }
 
+   //reset the order items cart
    public void clearCheckout()
    {
        orderItems.clear();

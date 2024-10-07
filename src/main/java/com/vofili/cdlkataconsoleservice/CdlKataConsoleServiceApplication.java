@@ -18,10 +18,9 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
     CheckoutService checkoutService;
     @Autowired
     ItemService itemService;
+
     public static void main(String[] args) {
-
         SpringApplication.run(CdlKataConsoleServiceApplication.class, args);
-
     }
 
     @Override
@@ -38,7 +37,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                         "\n (G)et final Total " +
                         "\n (E)xit to close\n");
                 input = scanner.next().trim();
-                System.out.println("Item entered " + input);
+                System.out.println("Option entered " + input);
 
                 switch (input.toUpperCase()) {
 
@@ -47,9 +46,6 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                         itemService.printAllAvailableSKUs();
                         String item = scanner.next();
                         checkoutService.scanItem(item);
-                        System.out.println("Item " + input.toUpperCase() + " added.");
-                        // Display running total after each item is scanned
-                        System.out.println("Running total: " + checkoutService.getRunningTotal() + " pence");
                         break;
                     case "V":
                         System.out.println("View current Pricing");
@@ -63,7 +59,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                         System.out.println("Get final total");
                         total = checkoutService.getRunningTotal();
                         checkoutService.clearCheckout();
-                        System.out.println("Final total: " +total + " pence");
+                        System.out.println("Final total: " +total + " pence " + " £"+total/100);
                         break;
                     default:
                         System.out.println("End the checkout");
