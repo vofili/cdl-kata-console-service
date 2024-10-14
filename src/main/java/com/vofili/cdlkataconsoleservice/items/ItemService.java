@@ -85,6 +85,7 @@ public class ItemService {
         Item itemB = new Item("B",30,new ItemOffer("B",45,2));
         Item itemC = new Item("C",20,null);
         Item itemD = new Item("D",15,null);
+
         pricingRule.put("A",itemA);
         pricingRule.put("B",itemB);
         pricingRule.put("C",itemC);

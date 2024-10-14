@@ -30,6 +30,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
             String input="";
             int total;
             while(!input.equalsIgnoreCase("exit")){
+
                 System.out.println("Welcome to the CDL Kata Checkout System \n Enter an option to Proceed:" +
                         "\n (S)can an item " +
                         "\n (V)iew current Pricing " +
@@ -37,6 +38,7 @@ public class CdlKataConsoleServiceApplication implements CommandLineRunner {
                         "\n (G)et final Total " +
                         "\n (E)xit to close\n");
                 input = scanner.next().trim();
+
                 System.out.println("Option entered " + input);
 
                 switch (input.toUpperCase()) {

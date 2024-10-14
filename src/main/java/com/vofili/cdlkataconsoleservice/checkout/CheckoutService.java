@@ -43,13 +43,14 @@ public class CheckoutService {
     //calculate the checkout price based on the quantity of each sku and any available offers
    public Integer calculateCheckoutPrice(String sku,int quantity){
        pricingRule = itemService.getPricingRule();
+      Item item = pricingRule.get(sku);
        ItemOffer itemOffer = pricingRule.get(sku).getItemOffer();
            if(itemOffer != null){
                int discountItems = quantity / itemOffer.getQuantity();
                int remainingItems = quantity % itemOffer.getQuantity();
-                return (discountItems * itemOffer.getPrice()) + (remainingItems * pricingRule.get(sku).getUnitPrice());
+                return (discountItems * itemOffer.getPrice()) + (remainingItems * item.getUnitPrice());
            }else{
-                return pricingRule.get(sku).getUnitPrice() * quantity;
+                return item.getUnitPrice() * quantity;
            }
    }
 
